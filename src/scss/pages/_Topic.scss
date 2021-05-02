@@ -1,0 +1,22 @@
+.challenge {
+    // background-image: url('/assets/challenge');
+    // height: '165px',
+    // fontSize: '30px',
+    // borderRadius: '10px',
+    // display: 'block',
+    // border: 'solid 1px',
+    // margin: '20px 20px 0 0',
+    height: 165px;
+    font-size: 30px;
+    border-radius: 10px;
+    display: block;
+    width: 80%;
+    margin: 20px 20px 0 0;
+    background-size: contain;
+    position: relative;
+}
+.side-bar-item-text{
+    color:white;
+    align-items: center;
+    padding: 25px 50px 25px 15px;
+}
