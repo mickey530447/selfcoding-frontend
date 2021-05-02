@@ -8,6 +8,7 @@ import Home from '../Pages/Home';
 import Classroom from '../Pages/Classroom';
 import Challenge from '../Pages/Challenge';
 import Problem from '../Pages/Problem';
+import ProblemDetail from '../Pages/ProblemDetail';
 import YourAccount from '../Pages/YourAccount';
 
 const ROUTES = [
@@ -33,6 +34,12 @@ const ROUTES = [
     path: AppRoutes.PROBLEM,
     exact: true,
     component: <Problem />,
+    title: 'Problem',
+  },
+  {
+    path: `${AppRoutes.PROBLEM}/:problem_id`,
+    exact: true,
+    component: <ProblemDetail />,
     title: 'Problem',
   },
   {
