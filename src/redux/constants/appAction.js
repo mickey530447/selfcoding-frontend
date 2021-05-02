@@ -1,7 +1,9 @@
 export const appActions = {
     LOGIN: 'LOGIN',
+    GET_USER_BY_EMAIL: 'GET_USER_BY_EMAIL',
     GET_USER: 'GET_USER',
     RESET_ERROR: 'RESET_ERROR',
     SET_LOADING: 'SET_LOADING',
+    GET_PROBLEM_LIST: 'GET_PROBLEM_LIST',
   };
   

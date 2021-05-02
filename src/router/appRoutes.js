@@ -43,7 +43,7 @@ const ROUTES = [
     title: 'Problem',
   },
   {
-    path: AppRoutes.YOURACCOUNT,
+    path: AppRoutes.YOUR_ACCOUNT,
     exact: true,
     component: <YourAccount />,
     title: 'Your Account',

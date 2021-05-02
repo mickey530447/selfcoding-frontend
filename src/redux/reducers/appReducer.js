@@ -6,6 +6,8 @@ const initialState = {
   currentUser: undefined,
   loginError: undefined,
   getMeFailed: false,
+  currentUserDetail: undefined,
+  problemList: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -20,6 +22,16 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentUser: action.data,
         isLoading: false,
+      };
+    case SUCCESS(appActions.GET_PROBLEM_LIST):
+      return {
+        ...state,
+        problemList: action.data,
+      };
+    case SUCCESS(appActions.GET_USER_BY_EMAIL):
+      return {
+        ...state,
+        currentUserDetail: action.data,
       };
     case FAILURE(appActions.LOGIN):
       return {

@@ -3,7 +3,8 @@ module.exports = {
     TOPIC_LIST: '/topics',
     HOME: '/home',
     PROBLEM: '/problem',
-    YOURACCOUNT: '/youraccount',
+    YOUR_ACCOUNT: '/youraccount',
+    LOGOUT: 'LOGOUT',
     CLASSROOM: '/classroom',
     CHALLENGE: '/challenge',
 };

@@ -15,6 +15,21 @@ export const getUserFailed = (data) => ({
   data,
 });
 
+export const getUserByEmail = (params) => ({
+  type: REQUEST(appActions.GET_USER_BY_EMAIL),
+  params,
+});
+
+export const getUserByEmailSuccess = (data) => ({
+  type: SUCCESS(appActions.GET_USER_BY_EMAIL),
+  data,
+});
+
+export const getUserByEmailFailed = (error) => ({
+  type: FAILURE(appActions.GET_USER_BY_EMAIL),
+  error,
+});
+
 export const loginSuccess = (data) => ({
   type: SUCCESS(appActions.LOGIN),
   data,
@@ -29,7 +44,19 @@ export const resetLoginError = () => ({
   type: REQUEST(appActions.RESET_ERROR),
 });
 
-export const setLoading = (params) => {
-  
-}
+export const getProblemList = (params) => ({
+  type: REQUEST(appActions.GET_PROBLEM_LIST),
+  params,
+});
+
+export const getProblemListSuccess = (data) => ({
+  type: SUCCESS(appActions.GET_PROBLEM_LIST),
+  data
+});
+
+export const getProblemListFailed = (error) => ({
+  type: FAILURE(appActions.GET_PROBLEM_LIST),
+  error,
+});
+
 
