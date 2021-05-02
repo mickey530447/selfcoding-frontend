@@ -14,8 +14,8 @@ const App = () => {
   return (
     <Fragment>
       <LoadingIndicator loadingClass="loading-medium" isLoading={isLoading} />
-      <div customClass="AccessDenied-pages">
-        <div className="d-flex flex-column col-12 padding-none">
+      <div className="pageContainer">
+        <div className="d-flex height-100-per width-100-per flex-column col-12 padding-none">
           <AppRoutes />
         </div>
       </div>

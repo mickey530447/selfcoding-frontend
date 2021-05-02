@@ -1,7 +1,7 @@
 import React from 'react';
 import Header from '../../components/Header';
 
-function index() {
+function ProblemDetail() {
     return (
         <div>
             <Header/>
@@ -10,4 +10,4 @@ function index() {
     )
 }
 
-export default index
+export default ProblemDetail
