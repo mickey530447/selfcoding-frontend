@@ -8,15 +8,15 @@ import {
   getProblemListFailed,
   getUserByEmailSuccess,
   getUserByEmailFailed,
+  getProblemDetailSuccess,
+  getProblemDetailFailed,
 } from '../actions/appAction';
 import { appActions } from '../constants/appAction';
 import { REQUEST } from '../constants/action-type';
 import Api from '../../core/api/apiConfig';
 
 function* loginRequest(data) {
-  //   yield put(setLoading(true));
   const { params } = data;
-  console.log(params);
   const getUser = Api.post('login/', params);
   try {
     const response = yield getUser;
@@ -26,15 +26,12 @@ function* loginRequest(data) {
     yield put(
       loginSuccess({ token: response.data.token, email: params.username }),
     );
-    // yield put(setLoading(false));
   } catch (error) {
     yield put(loginFailed(error.response && error.response.data));
-    // yield put(setLoading(false));
   }
 }
 
 function* handleGetProblemList(data) {
-  console.log('wtf');
   const { params } = data;
   try {
     const response = yield Api.post('getallsolveprob', params);
@@ -51,10 +48,19 @@ function* handleGetUserDetail(data) {
   }
   try {
     const response = yield Api.post('getuserbyemail', params);
-    console.log(response.data);
     yield put(getUserByEmailSuccess(response.data));
   } catch (error) {
     yield put(getUserByEmailFailed(error.response.data));
+  }
+}
+
+function* handleGetProblemDetail(data) {
+  const { params } = data;
+  try {
+    const response = Api.get(`problems/${params}`);
+    yield put(getProblemDetailSuccess(response.data));
+  } catch (error) {
+    yield put(getProblemDetailFailed(error.response.data));
   }
 }
 
@@ -80,6 +86,7 @@ function* authenticateSaga() {
     takeEvery(REQUEST(appActions.LOGIN), loginRequest),
     takeEvery(REQUEST(appActions.GET_USER_BY_EMAIL), handleGetUserDetail),
     takeEvery(REQUEST(appActions.GET_PROBLEM_LIST), handleGetProblemList),
+    takeEvery(REQUEST(appActions.GET_PROBLEM_DETAIL), handleGetProblemDetail),
     takeEvery(REQUEST(appActions.GET_USER), getMe),
   ]);
 }

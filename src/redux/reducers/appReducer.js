@@ -8,6 +8,8 @@ const initialState = {
   getMeFailed: false,
   currentUserDetail: undefined,
   problemList: [],
+  getProblemError: undefined,
+  problemDetail: undefined,
 };
 
 const reducer = (state = initialState, action) => {
@@ -48,6 +50,17 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         getMeFailed: action.data,
+      };
+    case SUCCESS(appActions.GET_PROBLEM_DETAIL):
+      return {
+        ...state,
+        problemDetail: action.data,
+      };
+    case FAILURE(appActions.GET_PROBLEM_DETAIL):
+      return {
+        ...state,
+        problemDetail: undefined,
+        getProblemError: action.error,
       };
     default:
       return state;

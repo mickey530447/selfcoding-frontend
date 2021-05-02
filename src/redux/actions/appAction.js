@@ -59,4 +59,19 @@ export const getProblemListFailed = (error) => ({
   error,
 });
 
+export const getProblemDetail = (params) => ({
+  type: REQUEST(appActions.GET_PROBLEM_DETAIL),
+  params,
+});
+
+export const getProblemDetailSuccess = (data) => ({
+  type: SUCCESS(appActions.GET_PROBLEM_DETAIL),
+  data
+});
+
+export const getProblemDetailFailed = (error) => ({
+  type: FAILURE(appActions.GET_PROBLEM_DETAIL),
+  error,
+});
+
 

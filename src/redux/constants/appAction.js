@@ -5,5 +5,6 @@ export const appActions = {
     RESET_ERROR: 'RESET_ERROR',
     SET_LOADING: 'SET_LOADING',
     GET_PROBLEM_LIST: 'GET_PROBLEM_LIST',
+    GET_PROBLEM_DETAIL: 'GET_PROBLEM_DETAIL',
   };
   

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
+import { useHistory } from 'react-router-dom';
+import * as PageRoutes from '../../router/router';
 import Header from '../../components/Header';
 import { PROBLEM_LEVEL, LEVEL_TITLE } from '../../constants/common';
 import { getProblemList, getUserByEmail } from '../../redux/actions/appAction';
@@ -12,6 +14,10 @@ const ProblemList = ({
 }) => {
   const { problemList, currentUserDetail } = appReducers;
   const [currentProblemList, setCurrentProblemList] = useState([]);
+  const history = useHistory();
+  const handleSelectProblem = (problem_id) => {
+    problem_id && history.push(`${PageRoutes.PROBLEM}/${problem_id}`);
+  };
 
   useEffect(() => {
     !currentUserDetail &&
@@ -82,10 +88,14 @@ const ProblemList = ({
                   {problem.list.length > 0 &&
                     problem.list.map((childProblem, index) => (
                       <div
+                        role="button"
                         key={`item_${index}`}
                         className={`problem-item font-weight-bold d-flex justify-content-center align-items-center m-r-20 width-by-px-30 height-by-px-30 ${
                           childProblem.solve && 'solved-detail-problem'
                         }`}
+                        onClick={() => {
+                          handleSelectProblem(childProblem.id);
+                        }}
                       >
                         {index + 1}
                       </div>
