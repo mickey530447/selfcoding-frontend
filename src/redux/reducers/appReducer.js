@@ -9,6 +9,13 @@ const initialState = {
   currentUserDetail: undefined,
   problemList: [],
   getProblemError: undefined,
+  alert: {
+    state: false,
+    message: undefined,
+    type: '',
+    cssClass: '',
+  },
+  submitAnswerFailed: false,
   problemDetail: undefined,
   topicList: undefined,
 };
@@ -30,6 +37,22 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         problemList: action.data,
+      };
+    case REQUEST(appActions.SHOW_ALERT):
+      return {
+        ...state,
+        alert: { ...state.alert, ...action.data },
+      };
+    case REQUEST(appActions.RESET_ALERT):
+      return {
+        ...state,
+        alert: { ...state.alert, state: false },
+        submitAnswerFailed: false,
+      };
+    case FAILURE(appActions.SUBMIT_ANSWER):
+      return {
+        ...state,
+        submitAnswerFailed: true,
       };
     case SUCCESS(appActions.GET_USER_BY_EMAIL):
       return {

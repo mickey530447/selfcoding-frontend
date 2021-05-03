@@ -4,23 +4,39 @@ import { compose } from 'redux';
 import { useForm } from 'react-hook-form';
 import { Button } from 'reactstrap';
 import { useParams } from 'react-router-dom';
-import { submitAnswer, getProblemDetail } from '../../redux/actions/appAction';
+import {
+  submitAnswer,
+  getProblemDetail,
+  showAlert,
+} from '../../redux/actions/appAction';
 import Header from '../../components/Header';
 
 function ProblemDetail({
   handleSubmitAnswer,
   appReducer,
   handleGetProblemDetail,
+  handleShowAlert,
 }) {
-  const { problemDetail } = appReducer;
+  const { problemDetail, submitAnswerFailed } = appReducer;
   const { problem_id } = useParams();
   const [detail, setDetail] = useState(undefined);
 
   const publicChatMethods = useForm({
     defaultValues: {
-      source: '',
+      script: '',
     },
   });
+
+  useEffect(() => {
+    if (submitAnswerFailed) {
+      handleShowAlert({
+        type: 'danger',
+        state: true,
+        message: 'Sorry Server is busy',
+        cssClass: 'justify-content-end position-fixed ps-t-30 custom-toast',
+      });
+    }
+  }, [submitAnswerFailed]);
 
   useEffect(() => {
     problem_id && handleGetProblemDetail(problem_id);
@@ -34,12 +50,7 @@ function ProblemDetail({
   const answerValue = watch('script');
 
   const formSubmitAnswer = (data) => {
-    const params = {
-      ...data,
-      compilerId: 56,
-      compilerVersionId: 5,
-    };
-    handleSubmitAnswer(params);
+    handleSubmitAnswer(data);
   };
 
   return (
@@ -60,7 +71,7 @@ function ProblemDetail({
             <div className="d-flex flex-column height-100-per width-70-per">
               <textarea
                 id="answer"
-                name="source"
+                name="script"
                 ref={register}
                 className="width-100-per problem-solver height-100-per "
               ></textarea>
@@ -88,6 +99,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleGetProblemDetail: (params) => dispatch(getProblemDetail(params)),
   handleSubmitAnswer: (params) => dispatch(submitAnswer(params)),
+  handleShowAlert: (params) => dispatch(showAlert(params)),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

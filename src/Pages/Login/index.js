@@ -9,11 +9,11 @@ import {
 } from '../../redux/actions/appAction';
 import { HOME } from '../../router/router';
 
-function Login({ handleLogin, appReducers, handleGetUserDetail }) {
+function Login({ handleLogin, appReducers }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
-  const { currentUser, currentUserDetail } = appReducers;
+  const { currentUser } = appReducers;
 
   useEffect(() => {
     if (currentUser) {
@@ -82,14 +82,6 @@ function Login({ handleLogin, appReducers, handleGetUserDetail }) {
       <button type="button" onClick={loginBtn} className="btn btn-primary">
         Login
       </button>
-      {/* <button
-        type="button"
-        onClick={() => {
-          formSubmitAnswer({ source: 'console.log(5)' });
-        }}
-      >
-        test API
-      </button> */}
     </div>
   );
 }

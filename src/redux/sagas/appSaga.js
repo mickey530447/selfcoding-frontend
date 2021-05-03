@@ -92,22 +92,11 @@ function* getMe() {
 
 function* handleSubmitAnswer(data) {
   const { params } = data;
-  const formData = new FormData();
-  formData.append('source', params.source);
-  formData.append('compilerId', params.compilerId);
-  formData.append('compilerVersionId', params.compilerVersionId);
   try {
-    const response = yield Api.post(
-      '',
-      formData,
-      {},
-      'https://de07d001.compilers.sphere-engine.com/api/v4/submissions?access_token=6f3cd81ada05e4a41915a78f66419104',
-    );
+    const response = yield Api.post('compile', params);
     yield put(submitAnswerSuccess(response.data.data));
-    // yield put(setLoading(false));
   } catch (error) {
     yield put(submitAnswerFailed(true));
-    // yield put(setLoading(false));
   }
 }
 
@@ -162,7 +151,7 @@ function* handleVerifyTopic(data) {
     yield handleGetTopicList();
     yield put(verifyTopicSuccess(response.data));
   } catch (error) {
-    yield put(verifyTopicFailed(error.response.data))
+    yield put(verifyTopicFailed(error.response.data));
   }
 }
 

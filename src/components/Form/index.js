@@ -2,12 +2,9 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
 import { updateTopic, createTopic } from '../../redux/actions/appAction';
-import APIService from '../../core/api/APIService';
 
 function Form({
   topic,
-  updatedInformation,
-  insertedInformation,
   handleUpdateTopic,
   appReducers,
   handleCreateTopic,

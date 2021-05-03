@@ -165,3 +165,13 @@ export const verifyTopicFailed = (error) => ({
   error,
 });
 
+export const showAlert = (data) => ({
+  type: REQUEST(appActions.SHOW_ALERT),
+  data,
+});
+
+export const resetShowAlert = (params) => ({
+  type: REQUEST(appActions.RESET_ALERT),
+  params,
+});
+
