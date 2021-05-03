@@ -14,8 +14,8 @@ import {
   submitAnswerFailed,
   getTopicListSuccess,
   getTopicListFailed,
-  deleteTopicSuccess,
-  deleteTopicFailed,
+  verifyTopicSuccess,
+  verifyTopicFailed,
 } from '../actions/appAction';
 import { appActions } from '../constants/appAction';
 import { REQUEST } from '../constants/action-type';
@@ -134,13 +134,13 @@ function* handleDeleteTopic(data) {
 
 function* handleUpdateTopic(data) {
   const { params, topicId } = data;
-    try {
+  try {
     // eslint-disable-next-line no-unused-vars
-      const response = yield Api.put(`topics/${topicId}/`, params);
-      yield handleGetTopicList();
-    } catch (error) {
-      yield put(getTopicListFailed(error.response.data));
-    }
+    const response = yield Api.put(`topics/${topicId}/`, params);
+    yield handleGetTopicList();
+  } catch (error) {
+    yield put(getTopicListFailed(error.response.data));
+  }
 }
 
 function* handleCreateTopic(data) {
@@ -155,6 +155,17 @@ function* handleCreateTopic(data) {
   }
 }
 
+function* handleVerifyTopic(data) {
+  const { params } = data;
+  try {
+    const response = yield Api.post('setverifiedtopic', params);
+    yield handleGetTopicList();
+    yield put(verifyTopicSuccess(response.data));
+  } catch (error) {
+    yield put(verifyTopicFailed(error.response.data))
+  }
+}
+
 function* authenticateSaga() {
   yield all([
     takeEvery(REQUEST(appActions.LOGIN), loginRequest),
@@ -166,6 +177,7 @@ function* authenticateSaga() {
     takeEvery(REQUEST(appActions.DELETE_TOPIC), handleDeleteTopic),
     takeEvery(REQUEST(appActions.UPDATE_TOPIC), handleUpdateTopic),
     takeEvery(REQUEST(appActions.CREATE_TOPIC), handleCreateTopic),
+    takeEvery(REQUEST(appActions.ADMIN_VERIFY_TOPIC), handleVerifyTopic),
     takeEvery(REQUEST(appActions.GET_USER), getMe),
   ]);
 }

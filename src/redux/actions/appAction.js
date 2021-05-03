@@ -150,3 +150,18 @@ export const createTopicFailed = (error) => ({
   error,
 });
 
+export const verifyTopic = (params) => ({
+  type: REQUEST(appActions.ADMIN_VERIFY_TOPIC),
+  params,
+});
+
+export const verifyTopicSuccess = (data) => ({
+  type: SUCCESS(appActions.ADMIN_VERIFY_TOPIC),
+  data
+});
+
+export const verifyTopicFailed = (error) => ({
+  type: FAILURE(appActions.ADMIN_VERIFY_TOPIC),
+  error,
+});
+

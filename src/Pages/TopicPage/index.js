@@ -4,23 +4,37 @@ import { compose } from 'redux';
 import { Button } from 'reactstrap';
 import TopicList from '../../components/TopicList';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { getTopicList, deleteTopic } from '../../redux/actions/appAction';
+import {
+  getTopicList,
+  deleteTopic,
+  verifyTopic,
+} from '../../redux/actions/appAction';
 import Form from '../../components/Form';
 import Header from '../../components/Header';
 
-function TopicPage({ handleGetTopicList, appReducers, handleDeleteTopic }) {
+function TopicPage({
+  handleGetTopicList,
+  appReducers,
+  handleDeleteTopic,
+  handleVerifyTopic,
+}) {
   const { topicList, currentUserDetail } = appReducers;
   const [topics, setTopics] = useState([]);
   const [editTopic, setEditTopic] = useState(null);
 
-  console.log(topicList);
-
   useEffect(() => {
-    if(topicList){
-      const verifyList = topicList.filter(item => item.isVerified);
+    if (topicList && currentUserDetail) {
+      const verifyList = topicList.filter((item) => item.isVerified);
       setTopics(verifyList);
     }
-  }, [topicList]);
+  }, [topicList, currentUserDetail]);
+
+  const filterPendingTopic = () => {
+    if (topicList) {
+      const unVerifyList = topicList.filter((item) => !item.isVerified);
+      setTopics(unVerifyList);
+    }
+  };
 
   useEffect(() => {
     handleGetTopicList();
@@ -32,6 +46,27 @@ function TopicPage({ handleGetTopicList, appReducers, handleDeleteTopic }) {
 
   const deleteBtn = (topic) => {
     handleDeleteTopic(topic.id);
+  };
+
+  const filterPublicTopic = () => {
+    if (topicList) {
+      const myTopicList = topicList.filter((item) => item.isVerified);
+      setTopics(myTopicList);
+    }
+  };
+
+  const filterMyTopic = () => {
+    if (topicList && currentUserDetail) {
+      const myTopicList = topicList.filter(
+        (item) => item.user === currentUserDetail.id,
+      );
+      setTopics(myTopicList);
+    }
+  };
+
+  const requestVerifyTopic = (topic_id) => {
+    const params = { topic_id, isVerified: true };
+    handleVerifyTopic(params);
   };
 
   const updatedInformation = (topic) => {
@@ -72,6 +107,7 @@ function TopicPage({ handleGetTopicList, appReducers, handleDeleteTopic }) {
             topics={topics}
             editBtn={editBtn}
             deleteBtn={deleteBtn}
+            requestVerifyTopic={requestVerifyTopic}
           />
           {editTopic ? (
             <Form
@@ -83,16 +119,44 @@ function TopicPage({ handleGetTopicList, appReducers, handleDeleteTopic }) {
         </div>
         <div className="col-md-4 col-xs-12">
           <div className="d-flex ">
+            <button
+              type="button"
+              onClick={topicForm}
+              className="btn btn-primary m-r-10"
+            >
+              Insert
+            </button>
+            <Button
+              type="button"
+              color="primary"
+              onClick={() => {
+                filterMyTopic();
+              }}
+              className="m-r-10"
+            >
+              My Topic
+            </Button>
             {currentUserDetail && currentUserDetail.is_staff && (
-              <button
+              <Button
                 type="button"
-                onClick={topicForm}
-                className="btn btn-primary m-r-15"
+                onClick={() => {
+                  filterPendingTopic();
+                }}
+                color="success"
+                className="m-r-10"
               >
-                Insert
-              </button>
+                Pending Topic
+              </Button>
             )}
-            <Button color="primary">My Topic</Button>
+            <Button
+              type="button"
+              onClick={() => {
+                filterPublicTopic();
+              }}
+              color="info"
+            >
+              Public Topic
+            </Button>
           </div>
 
           <div style={side_bar}>
@@ -124,6 +188,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleGetTopicList: (params) => dispatch(getTopicList(params)),
   handleDeleteTopic: (params) => dispatch(deleteTopic(params)),
+  handleVerifyTopic: (params) => dispatch(verifyTopic(params)),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
