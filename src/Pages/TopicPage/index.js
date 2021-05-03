@@ -13,8 +13,13 @@ function TopicPage({ handleGetTopicList, appReducers, handleDeleteTopic }) {
   const [topics, setTopics] = useState([]);
   const [editTopic, setEditTopic] = useState(null);
 
+  console.log(topicList);
+
   useEffect(() => {
-    topicList && setTopics(topicList);
+    if(topicList){
+      const verifyList = topicList.filter(item => item.isVerified);
+      setTopics(verifyList);
+    }
   }, [topicList]);
 
   useEffect(() => {
