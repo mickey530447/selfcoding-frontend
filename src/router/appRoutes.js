@@ -10,6 +10,7 @@ import Challenge from '../Pages/Challenge';
 import Problem from '../Pages/Problem';
 import ProblemDetail from '../Pages/ProblemDetail';
 import YourAccount from '../Pages/YourAccount';
+import RouteGuard from './routeGuard';
 
 const ROUTES = [
   {
@@ -21,43 +22,52 @@ const ROUTES = [
   {
     path: AppRoutes.TOPIC_LIST,
     exact: true,
-    component: <TopicPage />,
+    // component: <TopicPage />,
+    component: <RouteGuard component={TopicPage} />,
     title: 'Topic List',
   },
   {
     path: AppRoutes.HOME,
     exact: true,
-    component: <Home />,
+    // component: <Home />,
+    component: <RouteGuard component={Home} />,
+
     title: 'Home',
   },
   {
     path: AppRoutes.PROBLEM,
     exact: true,
-    component: <Problem />,
+    // component: <Problem />,
+    component: <RouteGuard component={Problem} />,
     title: 'Problem',
   },
   {
     path: `${AppRoutes.PROBLEM}/:problem_id`,
     exact: true,
-    component: <ProblemDetail />,
+    // component: <ProblemDetail />,
+    component: <RouteGuard component={ProblemDetail} />,
     title: 'Problem',
   },
   {
     path: AppRoutes.YOUR_ACCOUNT,
     exact: true,
-    component: <YourAccount />,
+    // component: <YourAccount />,
+    component: <RouteGuard component={YourAccount} />,
     title: 'Your Account',
   },
   {
     path: AppRoutes.CLASSROOM,
     exact: true,
-    component: <Classroom />,
+    // component: <Classroom />,
+    component: <RouteGuard component={Classroom} />,
+
     title: 'Class room',
   },
   {
     path: AppRoutes.CHALLENGE,
     exact: true,
-    component: <Challenge />,
+    // component: <Challenge />,
+    component: <RouteGuard component={Challenge} />,
     title: 'Challenge',
   },
 ];

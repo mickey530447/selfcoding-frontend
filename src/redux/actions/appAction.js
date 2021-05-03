@@ -74,4 +74,18 @@ export const getProblemDetailFailed = (error) => ({
   error,
 });
 
+export const submitAnswer = (params) => ({
+  type: REQUEST(appActions.SUBMIT_ANSWER),
+  params,
+});
+
+export const submitAnswerSuccess = (data) => ({
+  type: SUCCESS(appActions.SUBMIT_ANSWER),
+  data
+});
+
+export const submitAnswerFailed = (error) => ({
+  type: FAILURE(appActions.SUBMIT_ANSWER),
+  error,
+});
 

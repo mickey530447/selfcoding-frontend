@@ -20,10 +20,17 @@ function getApi(path, options = {}, apiURL) {
   });
 }
 
-function postApi(path, data, options = {}) {
+function postApi(path, data, options = {}, apiURL) {
   const headerParams = mergeWith(options.headers);
+  if (apiURL) {
+    return axios.post(`${apiURL || API_URL}${path.replace(/^\//, '')}`, data, {
+      ...defaultOptions,
+      ...options,
+      headers: headerParams,
+    });
+  }
 
-  return axios.post(`${API_URL}/${path.replace(/^\//, '')}`, data, {
+  return axios.post(`${apiURL || API_URL}/${path.replace(/^\//, '')}`, data, {
     ...defaultOptions,
     ...options,
     headers: headerParams,

@@ -18,7 +18,7 @@ function TopicPage() {
     })
       .then((res) => res.json())
       .then((res) => setTopics(res))
-      .catch((err) => console.log(err));
+      // .catch((err) => console.log(err));
   }, []);
 
   const editBtn = (topic) => {

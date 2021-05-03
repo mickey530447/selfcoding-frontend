@@ -15,8 +15,8 @@ import logo2 from './lam-quen-cong-nghe.png';
 import logo3 from './mo-rong-co-hoi-nghe-nghiep.png';
 import pic1 from './chia-khoa-lap-trinh.png';
 
-function Home({ appReducer, handleGetUserDetail }) {
-  const { currentUser } = appReducer;
+function Home({ handleGetUserDetail }) {
+//   const { currentUser } = appReducer;
   const body = {
     background: '#fff',
   };

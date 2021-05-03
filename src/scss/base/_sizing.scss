@@ -155,6 +155,10 @@
     .m-l-#{$i} {
       margin-left: #{$i}px;
     }
+    .mh-#{$i}{
+      margin-top: #{$i}px;
+      margin-bottom: #{$i}px;
+    }
   }
   
   .margin-none {

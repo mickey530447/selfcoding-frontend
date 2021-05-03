@@ -10,6 +10,8 @@ import {
   getUserByEmailFailed,
   getProblemDetailSuccess,
   getProblemDetailFailed,
+  submitAnswerSuccess,
+  submitAnswerFailed,
 } from '../actions/appAction';
 import { appActions } from '../constants/appAction';
 import { REQUEST } from '../constants/action-type';
@@ -56,8 +58,11 @@ function* handleGetUserDetail(data) {
 
 function* handleGetProblemDetail(data) {
   const { params } = data;
+  if (!params) {
+    return;
+  }
   try {
-    const response = Api.get(`problems/${params}`);
+    const response = yield Api.get(`problems/${params}/`);
     yield put(getProblemDetailSuccess(response.data));
   } catch (error) {
     yield put(getProblemDetailFailed(error.response.data));
@@ -81,12 +86,34 @@ function* getMe() {
   }
 }
 
+function* handleSubmitAnswer(data) {
+  const { params } = data;
+  const formData = new FormData();
+  formData.append('source', params.source);
+  formData.append('compilerId', params.compilerId);
+  formData.append('compilerVersionId', params.compilerVersionId);
+  try {
+    const response = yield Api.post(
+      '',
+      formData,
+      {},
+      'https://de07d001.compilers.sphere-engine.com/api/v4/submissions?access_token=6f3cd81ada05e4a41915a78f66419104',
+    );
+    yield put(submitAnswerSuccess(response.data.data));
+    // yield put(setLoading(false));
+  } catch (error) {
+    yield put(submitAnswerFailed(true));
+    // yield put(setLoading(false));
+  }
+}
+
 function* authenticateSaga() {
   yield all([
     takeEvery(REQUEST(appActions.LOGIN), loginRequest),
     takeEvery(REQUEST(appActions.GET_USER_BY_EMAIL), handleGetUserDetail),
     takeEvery(REQUEST(appActions.GET_PROBLEM_LIST), handleGetProblemList),
     takeEvery(REQUEST(appActions.GET_PROBLEM_DETAIL), handleGetProblemDetail),
+    takeEvery(REQUEST(appActions.SUBMIT_ANSWER), handleSubmitAnswer),
     takeEvery(REQUEST(appActions.GET_USER), getMe),
   ]);
 }

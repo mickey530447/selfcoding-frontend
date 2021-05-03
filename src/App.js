@@ -1,19 +1,19 @@
-import React, { Fragment, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import React, { Fragment } from 'react';
+// import { useLocation } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import LoadingIndicator from './components/LoadingIndicator';
+// import LoadingIndicator from './components/LoadingIndicator';
 import AppRoutes from './router/appRoutes';
 import './App.scss';
 import 'font-awesome/css/font-awesome.min.css';
 
 const App = () => {
-  const locate = useLocation();
-  const [isLoading, setIsLoading] = useState(false)
+  // const locate = useLocation();
+  // const [isLoading, setIsLoading] = useState(false);
 
   return (
     <Fragment>
-      <LoadingIndicator loadingClass="loading-medium" isLoading={isLoading} />
+      {/* <LoadingIndicator loadingClass="loading-medium" isLoading={isLoading} /> */}
       <div className="pageContainer">
         <div className="d-flex height-100-per width-100-per flex-column col-12 padding-none">
           <AppRoutes />
@@ -23,13 +23,9 @@ const App = () => {
   );
 };
 
-const mapStateToProps = (state) => ({
+const mapStateToProps = () => ({});
 
-});
-
-const mapDispatchToProps = (dispatch) => ({
-
-});
+const mapDispatchToProps = () => ({});
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
 

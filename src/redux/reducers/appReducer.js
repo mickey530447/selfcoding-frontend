@@ -34,6 +34,12 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         currentUserDetail: action.data,
+        getMeFailed: false,
+      };
+    case FAILURE(appActions.GET_USER_BY_EMAIL):
+      return {
+        ...state,
+        getMeFailed: true,
       };
     case FAILURE(appActions.LOGIN):
       return {
