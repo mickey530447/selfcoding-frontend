@@ -2,12 +2,21 @@ import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { compose } from 'redux';
-import { login, getUserByEmail } from '../../redux/actions/appAction';
+import {
+  login,
+  getUserByEmail,
+  submitAnswer,
+} from '../../redux/actions/appAction';
 import { HOME } from '../../router/router';
 import APIService from '../../core/api/APIService';
 import { store } from '../../redux/store';
 
-function Login({ handleLogin, currentUser, handleGetUserDetail }) {
+function Login({
+  handleLogin,
+  currentUser,
+  handleGetUserDetail,
+  handleSubmitAnswer,
+}) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
@@ -22,16 +31,22 @@ function Login({ handleLogin, currentUser, handleGetUserDetail }) {
     handleLogin({ username, password });
   };
 
+  const formSubmitAnswer = (data) => {
+    const params = {
+      ...data,
+      compilerId: 56,
+      compilerVersionId: 5,
+    };
+    handleSubmitAnswer(params);
+  };
+
   return (
     <div className="App ">
       <br />
       <br />
-
       <h1>Please login</h1>
-
       <br />
       <br />
-
       <div className="mb-3">
         <label htmlFor="username" className="form-label">
           Email
@@ -45,7 +60,6 @@ function Login({ handleLogin, currentUser, handleGetUserDetail }) {
           onChange={(e) => setUsername(e.target.value)}
         />
       </div>
-
       <div className="mb-3">
         <label htmlFor="password" className="form-label">
           Password
@@ -59,9 +73,16 @@ function Login({ handleLogin, currentUser, handleGetUserDetail }) {
           onChange={(e) => setPassword(e.target.value)}
         />
       </div>
-
       <button type="button" onClick={loginBtn} className="btn btn-primary">
         Login
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          formSubmitAnswer({ source: 'console.log(5)' });
+        }}
+      >
+        test API
       </button>
     </div>
   );
@@ -74,6 +95,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => ({
   handleLogin: (params) => dispatch(login(params)),
   handleGetUserDetail: (params) => dispatch(getUserByEmail(params)),
+  handleSubmitAnswer: (params) => dispatch(submitAnswer(params)),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);
