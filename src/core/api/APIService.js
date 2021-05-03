@@ -14,7 +14,6 @@ export default class APIService{
             'method' : 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Token ${sessionStorage.getItem('mytoken')}`,
             },
             body:JSON.stringify(body)
         }).then(res => res.json())

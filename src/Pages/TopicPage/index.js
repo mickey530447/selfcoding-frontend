@@ -1,23 +1,24 @@
 import React, { useState, useEffect } from 'react';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { Button } from 'reactstrap';
 import TopicList from '../../components/TopicList';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { getTopicList, deleteTopic } from '../../redux/actions/appAction';
 import Form from '../../components/Form';
 import Header from '../../components/Header';
 
-function TopicPage() {
+function TopicPage({ handleGetTopicList, appReducers, handleDeleteTopic }) {
+  const { topicList, currentUserDetail } = appReducers;
   const [topics, setTopics] = useState([]);
   const [editTopic, setEditTopic] = useState(null);
 
   useEffect(() => {
-    fetch('http://192.168.1.98:8000/api/topics/', {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    })
-      .then((res) => res.json())
-      .then((res) => setTopics(res));
-    // .catch((err) => console.log(err));
+    topicList && setTopics(topicList);
+  }, [topicList]);
+
+  useEffect(() => {
+    handleGetTopicList();
   }, []);
 
   const editBtn = (topic) => {
@@ -25,13 +26,7 @@ function TopicPage() {
   };
 
   const deleteBtn = (topic) => {
-    const new_topics = topics.filter((mytopic) => {
-      if (mytopic && mytopic.id === topic.id) {
-        return false;
-      }
-      return true;
-    });
-    setTopics(new_topics);
+    handleDeleteTopic(topic.id);
   };
 
   const updatedInformation = (topic) => {
@@ -67,7 +62,12 @@ function TopicPage() {
       <br />
       <div className="row">
         <div style={storyboard} className="offset-md-1 col-md-7 col-xs-12">
-          <TopicList topics={topics} editBtn={editBtn} deleteBtn={deleteBtn} />
+          <TopicList
+            currentUserDetail={currentUserDetail}
+            topics={topics}
+            editBtn={editBtn}
+            deleteBtn={deleteBtn}
+          />
           {editTopic ? (
             <Form
               topic={editTopic}
@@ -77,9 +77,19 @@ function TopicPage() {
           ) : null}
         </div>
         <div className="col-md-4 col-xs-12">
-          <button type="button" onClick={topicForm} className="btn btn-primary">
-            Insert
-          </button>
+          <div className="d-flex ">
+            {currentUserDetail && currentUserDetail.is_staff && (
+              <button
+                type="button"
+                onClick={topicForm}
+                className="btn btn-primary m-r-15"
+              >
+                Insert
+              </button>
+            )}
+            <Button color="primary">My Topic</Button>
+          </div>
+
           <div style={side_bar}>
             <div
               style={{ backgroundImage: 'url(/assets/challenge.png)' }}
@@ -102,4 +112,15 @@ function TopicPage() {
   );
 }
 
-export default TopicPage;
+const mapStateToProps = (state) => ({
+  appReducers: state.appReducers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleGetTopicList: (params) => dispatch(getTopicList(params)),
+  handleDeleteTopic: (params) => dispatch(deleteTopic(params)),
+});
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(TopicPage);

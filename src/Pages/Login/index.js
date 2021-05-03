@@ -8,18 +8,12 @@ import {
   submitAnswer,
 } from '../../redux/actions/appAction';
 import { HOME } from '../../router/router';
-import APIService from '../../core/api/APIService';
-import { store } from '../../redux/store';
 
-function Login({
-  handleLogin,
-  currentUser,
-  handleGetUserDetail,
-  handleSubmitAnswer,
-}) {
+function Login({ handleLogin, appReducers, handleGetUserDetail }) {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const history = useHistory();
+  const { currentUser, currentUserDetail } = appReducers;
 
   useEffect(() => {
     if (currentUser) {
@@ -27,18 +21,30 @@ function Login({
     }
   }, [currentUser]);
 
+  // useEffect(() => {
+  //   if (sessionStorage.getItem('email') && sessionStorage.getItem('mytoken')) {
+  //     handleGetUserDetail({ email: sessionStorage.getItem('email') });
+  //   }
+  // }, []);
+
+  // useEffect(() => {
+  //   if (sessionStorage.getItem('email') && sessionStorage.getItem('mytoken')) {
+  //     // currentUserDetail && history.push(HOME);
+  //   }
+  // }, [currentUserDetail]);
+
   const loginBtn = () => {
     handleLogin({ username, password });
   };
 
-  const formSubmitAnswer = (data) => {
-    const params = {
-      ...data,
-      compilerId: 56,
-      compilerVersionId: 5,
-    };
-    handleSubmitAnswer(params);
-  };
+  // const formSubmitAnswer = (data) => {
+  //   const params = {
+  //     ...data,
+  //     compilerId: 56,
+  //     compilerVersionId: 5,
+  //   };
+  //   handleSubmitAnswer(params);
+  // };
 
   return (
     <div className="App ">
@@ -76,20 +82,20 @@ function Login({
       <button type="button" onClick={loginBtn} className="btn btn-primary">
         Login
       </button>
-      <button
+      {/* <button
         type="button"
         onClick={() => {
           formSubmitAnswer({ source: 'console.log(5)' });
         }}
       >
         test API
-      </button>
+      </button> */}
     </div>
   );
 }
 
 const mapStateToProps = (state) => ({
-  currentUser: state.appReducers.currentUser,
+  appReducers: state.appReducers,
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -89,3 +89,64 @@ export const submitAnswerFailed = (error) => ({
   error,
 });
 
+export const getTopicList = (params) => ({
+  type: REQUEST(appActions.GET_TOPIC_LIST),
+  params,
+});
+
+export const getTopicListSuccess = (data) => ({
+  type: SUCCESS(appActions.GET_TOPIC_LIST),
+  data
+});
+
+export const getTopicListFailed = (error) => ({
+  type: FAILURE(appActions.GET_TOPIC_LIST),
+  error,
+});
+
+export const deleteTopic = (params) => ({
+  type: REQUEST(appActions.DELETE_TOPIC),
+  params,
+});
+
+export const deleteTopicSuccess = (data) => ({
+  type: SUCCESS(appActions.DELETE_TOPIC),
+  data
+});
+
+export const deleteTopicFailed = (error) => ({
+  type: FAILURE(appActions.DELETE_TOPIC),
+  error,
+});
+
+export const updateTopic = (topicId, params) => ({
+  type: REQUEST(appActions.UPDATE_TOPIC),
+  topicId,
+  params,
+});
+
+export const updateTopicSuccess = (data) => ({
+  type: SUCCESS(appActions.UPDATE_TOPIC),
+  data
+});
+
+export const updateTopicFailed = (error) => ({
+  type: FAILURE(appActions.UPDATE_TOPIC),
+  error,
+});
+
+export const createTopic = (params) => ({
+  type: REQUEST(appActions.CREATE_TOPIC),
+  params,
+});
+
+export const createTopicSuccess = (data) => ({
+  type: SUCCESS(appActions.CREATE_TOPIC),
+  data
+});
+
+export const createTopicFailed = (error) => ({
+  type: FAILURE(appActions.CREATE_TOPIC),
+  error,
+});
+

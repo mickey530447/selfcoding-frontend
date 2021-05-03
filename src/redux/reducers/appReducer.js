@@ -10,6 +10,7 @@ const initialState = {
   problemList: [],
   getProblemError: undefined,
   problemDetail: undefined,
+  topicList: undefined,
 };
 
 const reducer = (state = initialState, action) => {
@@ -35,6 +36,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         currentUserDetail: action.data,
         getMeFailed: false,
+      };
+    case SUCCESS(appActions.GET_TOPIC_LIST):
+      return {
+        ...state,
+        topicList: action.data,
       };
     case FAILURE(appActions.GET_USER_BY_EMAIL):
       return {

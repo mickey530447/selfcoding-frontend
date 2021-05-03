@@ -12,6 +12,10 @@ import {
   getProblemDetailFailed,
   submitAnswerSuccess,
   submitAnswerFailed,
+  getTopicListSuccess,
+  getTopicListFailed,
+  deleteTopicSuccess,
+  deleteTopicFailed,
 } from '../actions/appAction';
 import { appActions } from '../constants/appAction';
 import { REQUEST } from '../constants/action-type';
@@ -107,6 +111,50 @@ function* handleSubmitAnswer(data) {
   }
 }
 
+function* handleGetTopicList() {
+  try {
+    const response = yield Api.get('topics/');
+    yield put(getTopicListSuccess(response.data));
+  } catch (error) {
+    yield put(getTopicListFailed(error.response.data));
+  }
+}
+
+function* handleDeleteTopic(data) {
+  const { params } = data;
+  try {
+    // eslint-disable-next-line no-unused-vars
+    const response = yield Api.delete(`topics/${params}/`);
+    yield handleGetTopicList();
+    // yield put(getTopicListSuccess(response.data));
+  } catch (error) {
+    yield put(getTopicListFailed(error.response.data));
+  }
+}
+
+function* handleUpdateTopic(data) {
+  const { params, topicId } = data;
+    try {
+    // eslint-disable-next-line no-unused-vars
+      const response = yield Api.put(`topics/${topicId}/`, params);
+      yield handleGetTopicList();
+    } catch (error) {
+      yield put(getTopicListFailed(error.response.data));
+    }
+}
+
+function* handleCreateTopic(data) {
+  const { params } = data;
+  try {
+    // eslint-disable-next-line no-unused-vars
+    const response = yield Api.post(`topics/`, params);
+    yield handleGetTopicList();
+    // yield put(getTopicListSuccess(response.data));
+  } catch (error) {
+    yield put(getTopicListFailed(error.response.data));
+  }
+}
+
 function* authenticateSaga() {
   yield all([
     takeEvery(REQUEST(appActions.LOGIN), loginRequest),
@@ -114,6 +162,10 @@ function* authenticateSaga() {
     takeEvery(REQUEST(appActions.GET_PROBLEM_LIST), handleGetProblemList),
     takeEvery(REQUEST(appActions.GET_PROBLEM_DETAIL), handleGetProblemDetail),
     takeEvery(REQUEST(appActions.SUBMIT_ANSWER), handleSubmitAnswer),
+    takeEvery(REQUEST(appActions.GET_TOPIC_LIST), handleGetTopicList),
+    takeEvery(REQUEST(appActions.DELETE_TOPIC), handleDeleteTopic),
+    takeEvery(REQUEST(appActions.UPDATE_TOPIC), handleUpdateTopic),
+    takeEvery(REQUEST(appActions.CREATE_TOPIC), handleCreateTopic),
     takeEvery(REQUEST(appActions.GET_USER), getMe),
   ]);
 }
