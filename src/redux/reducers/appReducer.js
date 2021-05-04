@@ -18,6 +18,8 @@ const initialState = {
   submitAnswerFailed: false,
   problemDetail: undefined,
   topicList: undefined,
+  enrollClassSuccess: false,
+  classList: [],
 };
 
 const reducer = (state = initialState, action) => {
@@ -48,6 +50,7 @@ const reducer = (state = initialState, action) => {
         ...state,
         alert: { ...state.alert, state: false },
         submitAnswerFailed: false,
+        enrollClassSuccess: false,
       };
     case FAILURE(appActions.SUBMIT_ANSWER):
       return {
@@ -90,6 +93,16 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         problemDetail: action.data,
+      };
+    case SUCCESS(appActions.GET_CLASS_LIST):
+      return {
+        ...state,
+        classList: action.data,
+      };
+    case SUCCESS(appActions.ENROLL_CLASS):
+      return {
+        ...state,
+        enrollClassSuccess: true,
       };
     case FAILURE(appActions.GET_PROBLEM_DETAIL):
       return {

@@ -191,4 +191,34 @@ export const updateExpFailed = (error) => ({
   error,
 });
 
+export const getClassList = (params) => ({
+  type: REQUEST(appActions.UPDATE_EXP),
+  params,
+});
+
+export const getClassListSuccess = (data) => ({
+  type: SUCCESS(appActions.UPDATE_EXP),
+  data
+});
+
+export const getClassListFailed = (error) => ({
+  type: FAILURE(appActions.UPDATE_EXP),
+  error,
+});
+
+export const enrollInClass = (params) => ({
+  type: REQUEST(appActions.ENROLL_CLASS),
+  params,
+});
+
+export const enrollInClassSuccess = (data) => ({
+  type: SUCCESS(appActions.ENROLL_CLASS),
+  data
+});
+
+export const enrollInClassFailed = (error) => ({
+  type: FAILURE(appActions.ENROLL_CLASS),
+  error,
+});
+
 

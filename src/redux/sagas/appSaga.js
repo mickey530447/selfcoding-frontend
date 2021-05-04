@@ -16,6 +16,10 @@ import {
   getTopicListFailed,
   verifyTopicSuccess,
   verifyTopicFailed,
+  getClassListSuccess,
+  getClassListFailed,
+  enrollInClassSuccess,
+  enrollInClassFailed,
 } from '../actions/appAction';
 import { appActions } from '../constants/appAction';
 import { REQUEST } from '../constants/action-type';
@@ -166,6 +170,26 @@ function* handleUpdateExp(data) {
   }
 }
 
+function* handleGetClassList(data) {
+  const { params } = data;
+  try {
+    const response = yield Api.post('getclassbyuser', params);
+    yield put(getClassListSuccess(response.data));
+  } catch (error) {
+    yield put(getClassListFailed(error.response.data));
+  }
+}
+
+function* handleEnrollClass(data) {
+  const { params } = data;
+  try {
+    const response = yield Api.post('getclassbyuser', params);
+    yield put(enrollInClassSuccess(response.data));
+  } catch (error) {
+    yield put(enrollInClassFailed(error.response.data));
+  }
+}
+
 function* authenticateSaga() {
   yield all([
     takeEvery(REQUEST(appActions.LOGIN), loginRequest),
@@ -178,6 +202,8 @@ function* authenticateSaga() {
     takeEvery(REQUEST(appActions.UPDATE_TOPIC), handleUpdateTopic),
     takeEvery(REQUEST(appActions.UPDATE_EXP), handleUpdateExp),
     takeEvery(REQUEST(appActions.CREATE_TOPIC), handleCreateTopic),
+    takeEvery(REQUEST(appActions.ENROLL_CLASS), handleEnrollClass),
+    takeEvery(REQUEST(appActions.GET_CLASS_LIST), handleGetClassList),
     takeEvery(REQUEST(appActions.ADMIN_VERIFY_TOPIC), handleVerifyTopic),
     takeEvery(REQUEST(appActions.GET_USER), getMe),
   ]);
