@@ -74,9 +74,10 @@ export const getProblemDetailFailed = (error) => ({
   error,
 });
 
-export const submitAnswer = (params) => ({
+export const submitAnswer = (params, callback) => ({
   type: REQUEST(appActions.SUBMIT_ANSWER),
   params,
+  callback,
 });
 
 export const submitAnswerSuccess = (data) => ({
@@ -174,4 +175,20 @@ export const resetShowAlert = (params) => ({
   type: REQUEST(appActions.RESET_ALERT),
   params,
 });
+
+export const updateExp = (params) => ({
+  type: REQUEST(appActions.UPDATE_EXP),
+  params,
+});
+
+export const updateExpSuccess = (data) => ({
+  type: SUCCESS(appActions.UPDATE_EXP),
+  data
+});
+
+export const updateExpFailed = (error) => ({
+  type: FAILURE(appActions.UPDATE_EXP),
+  error,
+});
+
 

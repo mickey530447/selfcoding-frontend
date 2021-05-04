@@ -90,6 +90,13 @@
       min-height: #{$i}px;
     }
   }
+
+  //border-radius
+  @for $i from 1 through 200 {
+    .border-radius-px-#{$i} {
+      border-radius: #{$i}px;
+    }
+  }
   
   //padding
   @for $i from 1 through 300 {

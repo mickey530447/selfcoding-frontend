@@ -9,7 +9,7 @@ import Classroom from '../Pages/Classroom';
 import Challenge from '../Pages/Challenge';
 import Problem from '../Pages/Problem';
 import ProblemDetail from '../Pages/ProblemDetail';
-import YourAccount from '../Pages/YourAccount';
+import ProfilePage from '../Pages/ProfilePage';
 import RouteGuard from './routeGuard';
 
 const ROUTES = [
@@ -52,7 +52,7 @@ const ROUTES = [
     path: AppRoutes.YOUR_ACCOUNT,
     exact: true,
     // component: <YourAccount />,
-    component: <RouteGuard component={YourAccount} />,
+    component: <RouteGuard component={ProfilePage} />,
     title: 'Your Account',
   },
   {

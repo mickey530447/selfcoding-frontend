@@ -8,6 +8,7 @@ import {
   submitAnswer,
   getProblemDetail,
   showAlert,
+  updateExp,
 } from '../../redux/actions/appAction';
 import Header from '../../components/Header';
 
@@ -16,8 +17,9 @@ function ProblemDetail({
   appReducer,
   handleGetProblemDetail,
   handleShowAlert,
+  handleUpdateExp,
 }) {
-  const { problemDetail, submitAnswerFailed } = appReducer;
+  const { problemDetail, submitAnswerFailed, currentUserDetail } = appReducer;
   const { problem_id } = useParams();
   const [detail, setDetail] = useState(undefined);
 
@@ -33,7 +35,8 @@ function ProblemDetail({
         type: 'danger',
         state: true,
         message: 'Sorry Server is busy',
-        cssClass: 'justify-content-end position-fixed ps-t-30 custom-toast',
+        cssClass:
+          'justify-content-end position-fixed ps-t-30 ps-r-20 custom-toast',
       });
     }
   }, [submitAnswerFailed]);
@@ -49,8 +52,21 @@ function ProblemDetail({
   const { handleSubmit, register, watch } = publicChatMethods;
   const answerValue = watch('script');
 
+
   const formSubmitAnswer = (data) => {
-    handleSubmitAnswer(data);
+    handleSubmitAnswer(data, (res) => {
+      if (res.output === detail.result) {
+        const newExp = currentUserDetail.exp + detail.exp;
+        handleUpdateExp({ email: currentUserDetail.email, exp: newExp });
+        handleShowAlert({
+          type: 'success',
+          state: true,
+          message: 'Your answer is right',
+          cssClass:
+            'justify-content-end position-fixed ps-t-30 ps-r-20 custom-toast',
+        });
+      }
+    });
   };
 
   return (
@@ -98,8 +114,10 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   handleGetProblemDetail: (params) => dispatch(getProblemDetail(params)),
-  handleSubmitAnswer: (params) => dispatch(submitAnswer(params)),
+  handleSubmitAnswer: (params, callback) =>
+    dispatch(submitAnswer(params, callback)),
   handleShowAlert: (params) => dispatch(showAlert(params)),
+  handleUpdateExp: (params) => dispatch(updateExp(params)),
 });
 
 const withConnect = connect(mapStateToProps, mapDispatchToProps);

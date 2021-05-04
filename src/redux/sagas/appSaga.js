@@ -91,9 +91,10 @@ function* getMe() {
 }
 
 function* handleSubmitAnswer(data) {
-  const { params } = data;
+  const { params, callback } = data;
   try {
     const response = yield Api.post('compile', params);
+    callback && callback(response.data);
     yield put(submitAnswerSuccess(response.data.data));
   } catch (error) {
     yield put(submitAnswerFailed(true));
@@ -155,6 +156,16 @@ function* handleVerifyTopic(data) {
   }
 }
 
+function* handleUpdateExp(data) {
+  const { params } = data;
+  try {
+    const response = yield Api.put('modifyuserexp', params);
+    yield put(verifyTopicSuccess(response.data));
+  } catch (error) {
+    yield put(verifyTopicFailed(error.response.data));
+  }
+}
+
 function* authenticateSaga() {
   yield all([
     takeEvery(REQUEST(appActions.LOGIN), loginRequest),
@@ -165,6 +176,7 @@ function* authenticateSaga() {
     takeEvery(REQUEST(appActions.GET_TOPIC_LIST), handleGetTopicList),
     takeEvery(REQUEST(appActions.DELETE_TOPIC), handleDeleteTopic),
     takeEvery(REQUEST(appActions.UPDATE_TOPIC), handleUpdateTopic),
+    takeEvery(REQUEST(appActions.UPDATE_EXP), handleUpdateExp),
     takeEvery(REQUEST(appActions.CREATE_TOPIC), handleCreateTopic),
     takeEvery(REQUEST(appActions.ADMIN_VERIFY_TOPIC), handleVerifyTopic),
     takeEvery(REQUEST(appActions.GET_USER), getMe),
