@@ -6,6 +6,11 @@ export const login = (params) => ({
   params,
 });
 
+export const logOut = (params) => ({
+  type: REQUEST(appActions.LOGOUT),
+  params,
+});
+
 export const getUser = () => ({
   type: REQUEST(appActions.GET_USER),
 });

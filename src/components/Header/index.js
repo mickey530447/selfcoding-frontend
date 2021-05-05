@@ -2,12 +2,16 @@ import React from 'react';
 import { Menu } from 'antd';
 import Layout, { Header } from 'antd/lib/layout/layout';
 import { useHistory } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { compose } from 'redux';
+import { logOut } from '../../redux/actions/appAction';
 import * as PageRoutes from '../../router/router';
 
-function MainHeader() {
+function MainHeader({ handleLogOut }) {
   const history = useHistory();
   const handleClickHeader = (data) => {
     if (data.key === PageRoutes.LOGOUT) {
+      handleLogOut();
       sessionStorage.removeItem('mytoken');
       sessionStorage.removeItem('email');
       history.push(PageRoutes.LOGIN);
@@ -32,10 +36,7 @@ function MainHeader() {
             <Menu.Item key={PageRoutes.PROBLEM}>Problem</Menu.Item>
             <Menu.Item key={PageRoutes.CHALLENGE}>Challenge</Menu.Item>
             <Menu.Item key={PageRoutes.YOUR_ACCOUNT}>Your Account</Menu.Item>
-            <Menu.Item
-              key={PageRoutes.LOGOUT}
-              className="btn-danger"
-            >
+            <Menu.Item key={PageRoutes.LOGOUT} className="btn-danger">
               Logout
             </Menu.Item>
           </Menu>
@@ -46,4 +47,14 @@ function MainHeader() {
   );
 }
 
-export default MainHeader;
+const mapStateToProps = (state) => ({
+  appReducer: state.appReducers,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  handleLogOut: (params) => dispatch(logOut(params)),
+});
+
+const withConnect = connect(mapStateToProps, mapDispatchToProps);
+
+export default compose(withConnect)(MainHeader);

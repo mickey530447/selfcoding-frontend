@@ -1,5 +1,6 @@
 export const appActions = {
     LOGIN: 'LOGIN',
+    LOGOUT: 'LOGOUT',
     GET_USER_BY_EMAIL: 'GET_USER_BY_EMAIL',
     SHOW_ALERT: 'SHOW_ALERT',
     RESET_ALERT: 'RESET_ALERT',

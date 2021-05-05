@@ -29,6 +29,11 @@ const reducer = (state = initialState, action) => {
         ...state,
         isLoading: true,
       };
+    case REQUEST(appActions.LOGOUT):
+      return {
+        ...state,
+        currentUser: undefined,
+      };
     case SUCCESS(appActions.LOGIN):
       return {
         ...state,
