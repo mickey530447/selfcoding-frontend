@@ -9,6 +9,7 @@ import {
   getProblemDetail,
   showAlert,
   updateExp,
+  updateSolveStatus,
 } from '../../redux/actions/appAction';
 import Header from '../../components/Header';
 
@@ -18,6 +19,7 @@ function ProblemDetail({
   handleGetProblemDetail,
   handleShowAlert,
   handleUpdateExp,
+  handleSolvedStatus,
 }) {
   const { problemDetail, submitAnswerFailed, currentUserDetail } = appReducer;
   const { problem_id } = useParams();
@@ -58,6 +60,7 @@ function ProblemDetail({
       if (res.output === detail.result) {
         const newExp = currentUserDetail.exp + detail.exp;
         handleUpdateExp({ email: currentUserDetail.email, exp: newExp });
+        handleSolvedStatus({ user: currentUserDetail.id, problem: detail.id });
         handleShowAlert({
           type: 'success',
           state: true,
@@ -117,6 +120,7 @@ const mapDispatchToProps = (dispatch) => ({
   handleSubmitAnswer: (params, callback) =>
     dispatch(submitAnswer(params, callback)),
   handleShowAlert: (params) => dispatch(showAlert(params)),
+  handleSolvedStatus: (params) => dispatch(updateSolveStatus(params)),
   handleUpdateExp: (params) => dispatch(updateExp(params)),
 });
 

@@ -20,6 +20,8 @@ import {
   getClassListFailed,
   enrollInClassSuccess,
   enrollInClassFailed,
+  updateSolveStatusSuccess,
+  updateSolveStatusFailed,
 } from '../actions/appAction';
 import { appActions } from '../constants/appAction';
 import { REQUEST } from '../constants/action-type';
@@ -190,6 +192,16 @@ function* handleEnrollClass(data) {
   }
 }
 
+function* handleUpdateSolveStatus(data) {
+  const { params } = data;
+  try {
+    const response = yield Api.post('solvestatus/', params);
+    yield put(updateSolveStatusSuccess(response.data));
+  } catch (error) {
+    yield put(updateSolveStatusFailed(error.response.data));
+  }
+}
+
 function* authenticateSaga() {
   yield all([
     takeEvery(REQUEST(appActions.LOGIN), loginRequest),
@@ -204,6 +216,7 @@ function* authenticateSaga() {
     takeEvery(REQUEST(appActions.CREATE_TOPIC), handleCreateTopic),
     takeEvery(REQUEST(appActions.ENROLL_CLASS), handleEnrollClass),
     takeEvery(REQUEST(appActions.GET_CLASS_LIST), handleGetClassList),
+    takeEvery(REQUEST(appActions.UPDATE_SOLVE_STATUS), handleUpdateSolveStatus),
     takeEvery(REQUEST(appActions.ADMIN_VERIFY_TOPIC), handleVerifyTopic),
     takeEvery(REQUEST(appActions.GET_USER), getMe),
   ]);

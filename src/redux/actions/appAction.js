@@ -221,4 +221,18 @@ export const enrollInClassFailed = (error) => ({
   error,
 });
 
+export const updateSolveStatus = (params) => ({
+  type: REQUEST(appActions.UPDATE_SOLVE_STATUS),
+  params,
+});
+
+export const updateSolveStatusSuccess = (data) => ({
+  type: SUCCESS(appActions.UPDATE_SOLVE_STATUS),
+  data
+});
+
+export const updateSolveStatusFailed = (error) => ({
+  type: FAILURE(appActions.UPDATE_SOLVE_STATUS),
+  error,
+});
 
