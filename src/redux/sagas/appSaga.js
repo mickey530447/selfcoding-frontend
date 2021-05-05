@@ -185,7 +185,7 @@ function* handleGetClassList(data) {
 function* handleEnrollClass(data) {
   const { params } = data;
   try {
-    const response = yield Api.post('getclassbyuser', params);
+    const response = yield Api.post('enrollments/', params);
     yield put(enrollInClassSuccess(response.data));
   } catch (error) {
     yield put(enrollInClassFailed(error.response.data));
