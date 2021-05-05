@@ -192,17 +192,17 @@ export const updateExpFailed = (error) => ({
 });
 
 export const getClassList = (params) => ({
-  type: REQUEST(appActions.UPDATE_EXP),
+  type: REQUEST(appActions.GET_CLASS_LIST),
   params,
 });
 
 export const getClassListSuccess = (data) => ({
-  type: SUCCESS(appActions.UPDATE_EXP),
+  type: SUCCESS(appActions.GET_CLASS_LIST),
   data
 });
 
 export const getClassListFailed = (error) => ({
-  type: FAILURE(appActions.UPDATE_EXP),
+  type: FAILURE(appActions.GET_CLASS_LIST),
   error,
 });
 

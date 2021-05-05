@@ -19,7 +19,7 @@ function ClassRoom({
   const [classListState, setClassListState] = useState([]);
   useEffect(() => {
     handleGetClassList({
-      user_id: currentUserDetail.user_id,
+      user_id: currentUserDetail.id,
     });
   }, []);
 
