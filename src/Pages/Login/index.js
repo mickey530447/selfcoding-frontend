@@ -21,18 +21,6 @@ function Login({ handleLogin, appReducers }) {
     }
   }, [currentUser]);
 
-  // useEffect(() => {
-  //   if (sessionStorage.getItem('email') && sessionStorage.getItem('mytoken')) {
-  //     handleGetUserDetail({ email: sessionStorage.getItem('email') });
-  //   }
-  // }, []);
-
-  // useEffect(() => {
-  //   if (sessionStorage.getItem('email') && sessionStorage.getItem('mytoken')) {
-  //     // currentUserDetail && history.push(HOME);
-  //   }
-  // }, [currentUserDetail]);
-
   const loginBtn = () => {
     handleLogin({ username, password });
   };
