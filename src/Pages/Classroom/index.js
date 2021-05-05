@@ -29,7 +29,7 @@ function ClassRoom({
 
   const handleEnrollInclass = (class_id) => {
     handleEnrollClass({
-      user_id: currentUserDetail.user_id,
+      user_id: currentUserDetail.id,
       class_id,
     });
   };
