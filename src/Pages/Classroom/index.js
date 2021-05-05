@@ -52,8 +52,11 @@ function ClassRoom({
         <div> admin form create class here</div>
       ) : (
         classListState.length > 0 &&
-        classListState.map((appClass) => (
-          <div className="d-flex justify-content-between align-items-center shadow width-70-per">
+        classListState.map((appClass, index) => (
+          <div
+            key={index}
+            className="d-flex justify-content-between align-items-center shadow width-70-per"
+          >
             <div className="d-flex flex-column">
               <h5>{appClass.title}</h5>
               <p>{appClass.content}</p>
